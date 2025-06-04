@@ -1,10 +1,105 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Linking, Button } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, Linking, Animated } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+const Inner = styled.View`
+  padding: 16px;
+`;
+
+const Header = styled.View`
+  padding-bottom: 16px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+const TitleImage = styled.Image`
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+`;
+
+const AppTitle = styled.Text`
+  font-size: 22px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const ArticleImage = styled.Image`
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+`;
+
+const ArticleTitle = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: 8px;
+`;
+
+const Source = styled.Text`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.muted};
+  margin-bottom: 4px;
+`;
+
+const DateText = styled.Text`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.muted};
+  margin-bottom: 12px;
+`;
+
+
+const Content = styled.Text`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.text};
+  line-height: 22px;
+  margin-bottom: 20px;
+`;
+
+const OpenButton = styled.TouchableOpacity`
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 12px;
+  border-radius: 8px;
+  align-items: center;
+`;
+
+const ButtonText = styled.Text`
+  color: #fff;
+  font-weight: bold;
+`;
 
 export default function DetailsScreen() {
-  const route = useRoute();
-  const { article }: any = route.params;
+  const route = useRoute<any>();
+  const article = route.params?.article;
+  const fade = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fade, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  if (!article) {
+    return (
+      <Container>
+        <Inner>
+          <ArticleTitle>Artigo não encontrado.</ArticleTitle>
+        </Inner>
+      </Container>
+    );
+  }
 
   const openLink = () => {
     if (article.url) {
@@ -13,54 +108,35 @@ export default function DetailsScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {article.urlToImage ? (
-        <Image source={{ uri: article.urlToImage }} style={styles.image} />
-      ) : null}
-      <Text style={styles.title}>{article.title}</Text>
-      <Text style={styles.source}>{article.source.name}</Text>
-      <Text style={styles.date}>
-        {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })}
-      </Text>
-      {article.content ? <Text style={styles.content}>{article.content}</Text> : null}
-      <Button title="Ler notícia completa" onPress={openLink} />
-    </ScrollView>
+    <Container>
+      <Animated.View style={{ flex: 1, opacity: fade }}>
+        <ScrollView>
+          <Inner>
+            <Header>
+              <TitleImage source={require('../../assets/icon.png')} />
+              <AppTitle>Alice News</AppTitle>
+            </Header>
+
+            {article.urlToImage && <ArticleImage source={{ uri: article.urlToImage }} />}
+            <ArticleTitle>{article.title}</ArticleTitle>
+            <Source>{article.source?.name}</Source>
+            {article.publishedAt && (
+              <DateText>
+                {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                })}
+              </DateText>
+            )}
+
+            {article.content && <Content>{article.content}</Content>}
+            <OpenButton onPress={openLink}>
+              <ButtonText>Ler notícia completa</ButtonText>
+            </OpenButton>
+          </Inner>
+        </ScrollView>
+      </Animated.View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  source: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 4,
-  },
-  date: {
-    fontSize: 12,
-    color: '#777',
-    marginBottom: 12,
-  },
-  content: {
-    fontSize: 16,
-    lineHeight: 22,
-    marginBottom: 20,
-  },
-});

@@ -3,6 +3,8 @@
 
 Este projeto é um aplicativo mobile desenvolvido em **React Native com Expo**, como parte do desafio técnico do Senado Federal. O app consome uma API pública de notícias e permite ao usuário visualizar, buscar, favoritar e explorar conteúdos por categoria.
 
+A origem do nome veio em homenagem a minha menina de 6 anos, que é muito curiosa, carismatica e comunicativa.
+
 ---
 
 ## 🧩 Funcionalidades
@@ -12,10 +14,10 @@ Este projeto é um aplicativo mobile desenvolvido em **React Native com Expo**, 
 - ✅ Scroll infinito para carregamento de mais notícias
 - ✅ Campo de busca com debounce
 - ✅ Filtro por categorias (política, saúde, tecnologia, etc)
-- ✅ Favoritar notícias com persistência local (AsyncStorage) ✅ *(a implementar)*
-- ✅ Cache offline para modo sem internet ✅ *(a implementar)*
-- ✅ Tema claro e escuro ✅ *(a implementar)*
-- ✅ Splash screen e ícone customizado ✅ *(a implementar)*
+- ✅ Favoritar notícias com persistência local (AsyncStorage) 
+- ✅ Cache offline para modo sem internet 
+- ✅ Tema claro e escuro
+- ✅ Splash screen e ícone customizado 
 
 ---
 
@@ -29,7 +31,7 @@ Este projeto é um aplicativo mobile desenvolvido em **React Native com Expo**, 
 - [AsyncStorage](https://react-native-async-storage.github.io/async-storage/) *(para cache e favoritos)*
 - [Expo Vector Icons](https://icons.expo.fyi/)
 - [Lodash](https://lodash.com/) *(debounce)*
-
+- entre outras bibliotecas especificas como Suporte a tema escuro e claro com `useColorScheme`
 ---
 
 ## 🚀 Como rodar o projeto
@@ -54,9 +56,11 @@ npm install
 
 ```js
 extra: {
-  GNEWS_API_KEY: "SUA_CHAVE_AQUI" ou deixe a que já está no codigo, vai funcionar
+  GNEWS_API_KEY: "SUA_CHAVE_AQUI"
 }
 ```
+
+- ou deixe a que já está no codigo, vai funcionar sem problemas
 
 ### 4. Rode o app
 
@@ -72,8 +76,14 @@ Você pode testar no emulador Android/iOS ou com o app **Expo Go** no seu celula
 
 - Pesquise por notícias usando o campo no topo
 - Use a lista horizontal de categorias para filtrar os resultados
-- Clique em uma notícia para ver os detalhes completos
-- Toque na estrela ⭐ para favoritar uma notícia *(implementação futura)*
+- Clique em uma notícia para ver os detalhes completos, podendo abrir no site original
+- Toque na estrela ⭐ para favoritar uma notícia 
+- Na ⭐ Inferior direita você acha a pagina de favoritos
+
+![Video Gravado no Android 10+](./assets/alicenews.gif)
+
+[Baixar vídeo demonstrativo](./assets/alicenews.webm)
+
 
 ---
 
@@ -92,21 +102,10 @@ src/
 
 ---
 
-## 📦 Próximas melhorias
+## 📦 Disponivel o apk neste link
 
-- [ ] Implementar cache offline com AsyncStorage
-- [ ] Implementar tela de favoritos
-- [ ] Suporte a tema escuro e claro com `useColorScheme`
-- [ ] Splash screen personalizada e ícone do app
-- [ ] Deploy (APK/AAB) para instalação offline
+- [Baixar apk](./assets/alicenews.apk)
 
----
-
-## 📸 Capturas de tela *(adicione quando quiser)*
-
-| Home | Detalhes | Favoritos |
-|------|----------|-----------|
-| ![](./assets/home.png) | ![](./assets/details.png) | ![](./assets/favorites.png) |
 
 ---
 

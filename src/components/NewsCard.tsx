@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFavoritesStore } from '../store/useFavoritesStore';
 
+
 type NewsCardProps = {
   article: {
     title: string;

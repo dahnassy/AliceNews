@@ -1,21 +1,63 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
-import NewsCard from '../components/NewsCard';
+import { FlatList, useColorScheme } from 'react-native';
+import styled from 'styled-components/native';
 import { useFavoritesStore } from '../store/useFavoritesStore';
 import { useNavigation } from '@react-navigation/native';
+import NewsCard from '../components/NewsCard';
+import { lightTheme, darkTheme } from '../theme/colors';
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+const Header = styled.View`
+  padding: 16px;
+  padding-top: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+`;
+
+const TitleImage = styled.Image`
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+`;
+
+const AppTitle = styled.Text`
+  font-size: 22px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const EmptyText = styled.Text`
+  margin-top: 32px;
+  text-align: center;
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.muted};
+`;
 
 export default function FavoritesScreen() {
   const navigation = useNavigation();
   const { favorites, loadFavorites } = useFavoritesStore();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
 
   useEffect(() => {
     loadFavorites();
   }, []);
 
   return (
-    <View style={styles.container}>
+    <Container>
+      <Header>
+        <TitleImage source={require('../../assets/icon.png')} />
+        <AppTitle>Alice News</AppTitle>
+      </Header>
+
       {favorites.length === 0 ? (
-        <Text style={styles.empty}>Nenhuma notícia favoritada ainda.</Text>
+        <EmptyText>Nenhuma notícia favoritada ainda.</EmptyText>
       ) : (
         <FlatList
           data={favorites}
@@ -26,21 +68,9 @@ export default function FavoritesScreen() {
               onPress={() => navigation.navigate('Details', { article: item })}
             />
           )}
+          contentContainerStyle={{ paddingVertical: 16 }}
         />
       )}
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f2f2f2',
-  },
-  empty: {
-    marginTop: 32,
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#888',
-  },
-});
