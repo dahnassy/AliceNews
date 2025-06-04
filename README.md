@@ -40,7 +40,7 @@ A origem do nome veio em homenagem a minha menina de 6 anos, que é muito curios
 
 ```bash
 git clone https://github.com/dahnassy/AliceNews.git
-cd alice-news
+cd AliceNews
 ```
 
 ### 2. Instale as dependências
@@ -104,7 +104,7 @@ src/
 
 ## 📦 Disponivel o apk neste link
 
-- [Baixar apk](./assets/alicenews.apk)
+- [Baixar apk](./assets/AliceNews.apk)
 
 
 ---
