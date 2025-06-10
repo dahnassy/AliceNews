@@ -19,7 +19,7 @@ export default {
       supportsTablet: true
     },
     android: {
-      package: "com.dahnassy.alicenews", // 👈 adicione isso
+      package: "com.dahnassy.alicenews",
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#ffffff"
